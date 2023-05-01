@@ -1,0 +1,36 @@
+---
+title: "Analisis Berpangkat Tinggi: "
+author: "Arditya Criszardin"
+date: "2023-05-01"
+output: html_document
+---
+
+```{r}
+# Memasang paket "lavaan" jika belum terpasang
+# install.packages("lavaan")
+
+# Memuat data
+my_data <- read.csv("my_data.csv")
+
+# Melakukan Analisis Berpangkat Tinggi dengan menggunakan paket "lavaan"
+library(lavaan)
+my_model <- '
+  # Menggambarkan faktor-faktor observasional
+  factor1 =~ item1 + item2 + item3
+  factor2 =~ item4 + item5 + item6
+  
+  # Menggambarkan faktor-faktor berpangkat tinggi
+  factor3 =~ factor1 + factor2
+'
+
+my_fit <- cfa(my_model, data = my_data)
+
+# Menampilkan hasil Analisis Berpangkat Tinggi
+summary(my_fit)
+
+# Plot hasil Analisis Berpangkat Tinggi
+library(semPlot)
+semPaths(my_fit, "std", "est", "oval", "outer")
+
+```
+
